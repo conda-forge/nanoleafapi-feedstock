@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nanoleafapi-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/nanoleafapi-{{ version }}.tar.gz
   sha256: cb8c5407197b4ab8bd79e5ee791020667579f0fbbe92009e9014587d74ea2a97
 
 build:
@@ -18,14 +18,15 @@ build:
     - {{ PYTHON }} -m pip install . -vv
     - rm $PREFIX/bin/effects-builder  # [unix]
     - del %PREFIX%\\Scripts\\effects-builder.exe  # [win]
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pip
+    - setuptools
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - requests
     - sseclient
 
@@ -36,6 +37,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/MylesMor/nanoleafapi
